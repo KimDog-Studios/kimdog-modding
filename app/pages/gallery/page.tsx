@@ -5,6 +5,7 @@ import { Container, Grid, Box, Typography, Card, CardMedia, CardContent, Modal, 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import screenshots from '@/config/Screenshots';
+import Image from 'next/image';
 
 function GalleryPage() {
   const [images, setImages] = useState<{ url: string, author: string, id: string, avatar: string }[]>([]);
@@ -129,7 +130,7 @@ function GalleryPage() {
             }}
           >
             {selectedImage && (
-              <img src={selectedImage} alt="Selected Screenshot" style={{ width: '100%', borderRadius: '10px' }} />
+              <Image src={selectedImage} alt="Selected Screenshot" layout="responsive" width={800} height={600} style={{ borderRadius: '10px' }} />
             )}
           </Box>
         </Fade>
