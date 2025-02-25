@@ -7,6 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import GameIcon from '@mui/icons-material/SportsEsports';
 import AuthorIcon from '@mui/icons-material/Person';
 import images from "@/config/HomeImages";
+import Image from 'next/image';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -77,7 +78,7 @@ export default function Home() {
               {freeMods.map((mod, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
                   <Paper className="p-8 rounded-lg shadow-lg">
-                    <img src={mod.image} alt={mod.title} className="w-full rounded-lg" />
+                    <Image src={mod.image} alt={mod.title} className="w-full rounded-lg" width={500} height={300} />
                     <Typography variant="h6" component="h3" className="mt-4 font-bold">
                       {mod.title}
                     </Typography>
@@ -113,7 +114,7 @@ export default function Home() {
                           href={mod.steamLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363481315053679/Steam_icon_logo.svg.png?ex=67bd003c&is=67bbaebc&hm=d95b055a57b76663036aa51a112e04cd2307215d8e717680e000a1c681a38a99&" alt="Steam" className="w-5" />}
+                          startIcon={<Image src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363481315053679/Steam_icon_logo.svg.png?ex=67bd003c&is=67bbaebc&hm=d95b055a57b76663036aa51a112e04cd2307215d8e717680e000a1c681a38a99&" alt="Steam" className="w-5" width={20} height={20} />}
                         >
                           Steam Workshop
                         </Button>
@@ -125,7 +126,7 @@ export default function Home() {
                           href={mod.modsfireLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363674789646409/f-logo.png?ex=67bd006a&is=67bbaeea&hm=aebb92652e0e23871246ab3d2a31e6ce88ca610d2f9b1988827f8c76d5bd29cc&" alt="Modsfire" className="w-5" />}
+                          startIcon={<Image src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363674789646409/f-logo.png?ex=67bd006a&is=67bbaeea&hm=aebb92652e0e23871246ab3d2a31e6ce88ca610d2f9b1988827f8c76d5bd29cc&" alt="Modsfire" className="w-5" width={20} height={20} />}
                         >
                           Modsfire
                         </Button>
