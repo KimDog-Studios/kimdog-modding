@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const { Client, GatewayIntentBits } = require('discord.js');
+require('dotenv').config();
 
-const DISCORD_BOT_TOKEN = 'MTI5NDA0Mjc0NzA2NTU5ODAzNw.G2Ruor.YP76VKj9Nc8daEbN43y4KNv_KuYhTUBzsbNK1M';
-const CHANNEL_ID = '1342731220433244171';
+const DISCORD_BOT_TOKEN = process.env.DISCORD_TOKEN;
+const CHANNEL_ID = process.env.DISCORD_CHANNEL_ID;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
