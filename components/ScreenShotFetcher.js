@@ -1,7 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const { Client, GatewayIntentBits } = require('discord.js');
-require('dotenv').config();
+import fs from 'fs';
+import path from 'path';
+import { Client, GatewayIntentBits } from 'discord.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const DISCORD_BOT_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = process.env.DISCORD_CHANNEL_ID;
