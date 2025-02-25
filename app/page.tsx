@@ -6,27 +6,7 @@ import freeMods from "@/config/FreeMods";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import GameIcon from '@mui/icons-material/SportsEsports';
 import AuthorIcon from '@mui/icons-material/Person';
-
-const images = [
-  {
-    src: "https://media.discordapp.net/attachments/1343366518649524286/1343366765924712539/1.png?ex=67bd034b&is=67bbb1cb&hm=5c7250092a9841c2bca922ed996ae61d03dfac5fcd1e2457404d15edd0fd2295&=&format=webp&quality=lossless&width=1609&height=905",
-    title: "Welcome to KimDog Modding",
-    subtitle: "Your one-stop solution for all your modding needs",
-    buttonText: "Get Started",
-  },
-  {
-    src: "https://media.discordapp.net/attachments/1343366518649524286/1343366766822297641/2.png?ex=67bd034b&is=67bbb1cb&hm=81f9647eb4b8750387279457698c0cf642a71f569e313b117554a33e5fe76fcd&=&format=webp&quality=lossless&width=1609&height=905",
-    title: "High-Quality Mods",
-    subtitle: "Enhance your gaming experience with our top-notch mods",
-    buttonText: "Learn More",
-  },
-  {
-    src: "https://media.discordapp.net/attachments/1343366518649524286/1343366767585792020/3.png?ex=67bd034b&is=67bbb1cb&hm=3a7ed92b35bce3f81a4599e06d0e6ed1f9491c3487850d5ca749ed91a9aa5f79&=&format=webp&quality=lossless&width=1609&height=905",
-    title: "Excellent Support",
-    subtitle: "We provide 24/7 support for all our clients",
-    buttonText: "Contact Us",
-  },
-];
+import images from "@/config/HomeImages";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -40,7 +20,7 @@ export default function Home() {
 
     const progressInterval = setInterval(() => {
       setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 100 / 150));
-    }, 150); // Update progress every 150ms
+    }, 100); // Update progress every 100ms
 
     return () => {
       clearInterval(interval);
@@ -50,89 +30,103 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ position: "fixed", top: 0, width: "100%", zIndex: 1000 }}>
+      <div className="fixed top-0 w-full z-50">
         <Navigation />
       </div>
-      <div style={{ marginTop: "64px" }}> {/* Adjust this value based on the height of your Navigation component */}
-        <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+      <div className="mt-16"> {/* Adjust this value based on the height of your Navigation component */}
+        <div className="relative w-full h-screen overflow-hidden">
           {images.map((image, index) => (
             <div
               key={index}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                backgroundImage: `url(${image.src})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                opacity: index === currentSlide ? 1 : 0,
-                transition: "opacity 1s ease-in-out",
-              }}
+              className={`absolute w-full h-full bg-cover bg-center transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              style={{ backgroundImage: `url(${image.src})` }}
             >
-              <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(0, 0, 0, 0.5)", padding: "20px", borderRadius: "10px", textAlign: "center" }}>
-                <Typography variant="h4" component="h2" style={{ color: "#fff" }}>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-50 p-5 rounded-lg text-center">
+                <Typography variant="h4" component="h2" className="text-white">
                   {image.title}
                 </Typography>
-                <Typography variant="h6" component="p" style={{ color: "#fff" }}>
+                <Typography variant="h6" component="p" className="text-white">
                   {image.subtitle}
                 </Typography>
-                <Button variant="contained" color="primary" size="large" style={{ marginTop: "1rem" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  className="mt-4"
+                  href={image.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {image.buttonText}
                 </Button>
               </div>
             </div>
           ))}
-          <div style={{ position: "absolute", top: 0, right: 0, height: "100%", width: "5px", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
-            <div style={{ height: `${progress}%`, width: "100%", backgroundColor: "red", transition: "height 0.15s linear" }} />
+          <div className="absolute top-0 right-0 h-full w-1 bg-black bg-opacity-50">
+            <div className="h-full w-full bg-red-500 transition-height duration-150" style={{ height: `${progress}%` }} />
           </div>
         </div>
 
-        <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
+        <Container maxWidth="lg" className="mt-8">
           {/* Free Mods Section */}
-          <Box style={{ marginTop: "4rem", textAlign: "center" }}>
-            <Typography variant="h4" component="h2" gutterBottom style={{ fontWeight: "bold" }}>
+          <Box className="mt-16 text-center">
+            <Typography variant="h4" component="h2" gutterBottom className="font-bold">
               Free Mods
             </Typography>
             <Grid container spacing={4}>
               {freeMods.map((mod, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Paper style={{ padding: "2rem", borderRadius: "15px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}>
-                    <img src={mod.image} alt={mod.title} style={{ width: "100%", borderRadius: "10px" }} />
-                    <Typography variant="h6" component="h3" style={{ marginTop: "1rem", fontWeight: "bold" }}>
+                  <Paper className="p-8 rounded-lg shadow-lg">
+                    <img src={mod.image} alt={mod.title} className="w-full rounded-lg" />
+                    <Typography variant="h6" component="h3" className="mt-4 font-bold">
                       {mod.title}
                     </Typography>
                     {Array.isArray(mod.description) ? (
                       mod.description.map((line, idx) => (
-                        <Typography key={idx} variant="body1" style={{ marginTop: idx === 0 ? "0.5rem" : "0" }}>
+                        <Typography key={idx} variant="body1" className={`mt-${idx === 0 ? '2' : '0'}`}>
                           {line}
                         </Typography>
                       ))
                     ) : (
-                      <Typography variant="body1" style={{ marginTop: "0.5rem" }}>
+                      <Typography variant="body1" className="mt-2">
                         {mod.description}
                       </Typography>
                     )}
-                    <Box style={{ display: "flex", justifyContent: "center", marginTop: "0.5rem" }}>
-                      <GameIcon style={{ marginRight: "0.5rem" }} />
+                    <Box className="flex justify-center mt-2">
+                      <GameIcon className="mr-2" />
                       <Typography variant="body2">
                         {mod.game}
                       </Typography>
                     </Box>
-                    <Box style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "0.5rem" }}>
-                      <AuthorIcon style={{ marginRight: "0.5rem" }} />
+                    <Box className="flex justify-center items-center mt-2">
+                      <AuthorIcon className="mr-2" />
                       <Typography variant="body2">
                         {mod.author}
                       </Typography>
-                      {mod.author === "KimDog" && <CheckCircleIcon style={{ color: "green", marginLeft: "0.5rem" }} />}
+                      {mod.author === "KimDog" && <CheckCircleIcon className="text-green-500 ml-2" />}
                     </Box>
-                    <Box style={{ display: "flex", justifyContent: "space-around", marginTop: "1rem" }}>
+                    <Box className="flex justify-around mt-4">
                       {mod.steamLink !== "#" && (
-                        <Button variant="contained" color="primary" href={mod.steamLink} target="_blank" startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363481315053679/Steam_icon_logo.svg.png?ex=67bd003c&is=67bbaebc&hm=d95b055a57b76663036aa51a112e04cd2307215d8e717680e000a1c681a38a99&" alt="Steam" style={{ width: "20px" }} />}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          href={mod.steamLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363481315053679/Steam_icon_logo.svg.png?ex=67bd003c&is=67bbaebc&hm=d95b055a57b76663036aa51a112e04cd2307215d8e717680e000a1c681a38a99&" alt="Steam" className="w-5" />}
+                        >
                           Steam Workshop
                         </Button>
                       )}
                       {mod.modsfireLink !== "#" && (
-                        <Button variant="contained" color="primary" href={mod.modsfireLink} target="_blank" startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363674789646409/f-logo.png?ex=67bd006a&is=67bbaeea&hm=aebb92652e0e23871246ab3d2a31e6ce88ca610d2f9b1988827f8c76d5bd29cc&" alt="Modsfire" style={{ width: "20px" }} />}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          href={mod.modsfireLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          startIcon={<img src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363674789646409/f-logo.png?ex=67bd006a&is=67bbaeea&hm=aebb92652e0e23871246ab3d2a31e6ce88ca610d2f9b1988827f8c76d5bd29cc&" alt="Modsfire" className="w-5" />}
+                        >
                           Modsfire
                         </Button>
                       )}
@@ -144,7 +138,7 @@ export default function Home() {
           </Box>
 
           {/* Footer */}
-          <footer style={{ marginTop: "4rem", padding: "2rem", textAlign: "center", backgroundColor: "#333", color: "#fff", borderRadius: "15px" }}>
+          <footer className="mt-16 p-8 text-center bg-gray-800 text-white rounded-lg">
             <Typography variant="body1">
               &copy; {new Date().getFullYear()} KimDog Modding. All rights reserved.
             </Typography>
