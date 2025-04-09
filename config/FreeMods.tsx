@@ -6,7 +6,7 @@ const freeMods = [
         "https://linktr.ee/theyeetchannel_ttv",
         "Please note this Contains Swearing!"
       ],
-      image: "https://cdn.discordapp.com/attachments/1324377833350627329/1340406236520382615/KimDog-Clean-BlueWhite-with-truck.png?ex=67bc2156&is=67bacfd6&hm=9640ab724d49a41ab44a1e183cea1c6a285b64f860a8fb99d5a04e7bf90ac10d&",
+      image: "https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/Logo.png",
       game: "ETS 2",
       author: "KimDog",
       steamLink: "https://steamcommunity.com/sharedfiles/filedetails/?id=3415329426",
@@ -19,7 +19,7 @@ const freeMods = [
           "https://linktr.ee/theyeetchannel_ttv",
           "Please note this Contains Swearing!"
         ],
-        image: "https://cdn.discordapp.com/attachments/1324377833350627329/1340406236520382615/KimDog-Clean-BlueWhite-with-truck.png?ex=67bc2156&is=67bacfd6&hm=9640ab724d49a41ab44a1e183cea1c6a285b64f860a8fb99d5a04e7bf90ac10d&",
+        image: "https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/Logo.png",
         game: "ATS",
         author: "KimDog",
         steamLink: "https://steamcommunity.com/sharedfiles/filedetails/?id=3415420176",
@@ -28,7 +28,7 @@ const freeMods = [
     {
       title: "Mod 3",
       description: "Description of the free mod 3.",
-      image: "/assets/mods/mod3.png",
+      image: "https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/Logo.png",
       game: "Game 3",
       author: "Author 3",
       steamLink: "#",

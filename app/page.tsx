@@ -114,7 +114,7 @@ export default function Home() {
                           href={mod.steamLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          startIcon={<Image src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363481315053679/Steam_icon_logo.svg.png?ex=67bd003c&is=67bbaebc&hm=d95b055a57b76663036aa51a112e04cd2307215d8e717680e000a1c681a38a99&" alt="Steam" className="w-5" width={20} height={20} />}
+                          startIcon={<Image src="https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/Steam.png" alt="Steam" className="w-5" width={20} height={20} />}
                         >
                           Steam Workshop
                         </Button>
@@ -126,7 +126,7 @@ export default function Home() {
                           href={mod.modsfireLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          startIcon={<Image src="https://cdn.discordapp.com/attachments/1324377833350627329/1343363674789646409/f-logo.png?ex=67bd006a&is=67bbaeea&hm=aebb92652e0e23871246ab3d2a31e6ce88ca610d2f9b1988827f8c76d5bd29cc&" alt="Modsfire" className="w-5" width={20} height={20} />}
+                          startIcon={<Image src="https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/ModsFire.png" alt="Modsfire" className="w-5" width={20} height={20} />}
                         >
                           Modsfire
                         </Button>
