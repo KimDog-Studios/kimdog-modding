@@ -2,16 +2,40 @@
 import Navigation from "@/components/Navigation";
 import { Container, Typography, Grid, Paper, Button, Box } from "@mui/material";
 import { useState, useEffect } from "react";
-import freeMods from "@/config/FreeMods";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import GameIcon from '@mui/icons-material/SportsEsports';
-import AuthorIcon from '@mui/icons-material/Person';
+import downloads from "@/config/Downloads";
 import images from "@/config/HomeImages";
-import Image from 'next/image';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof typeof downloads[0] | null; direction: "asc" | "desc" }>({ key: null, direction: "asc" });
+
+  const sortedDownloads = [...downloads].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+    const aValue = a[sortConfig.key] || "";
+    const bValue = b[sortConfig.key] || "";
+    if (sortConfig.direction === "asc") {
+      return String(aValue).localeCompare(String(bValue));
+    } else {
+      return bValue.localeCompare(aValue);
+    }
+  });
+
+  const handleSort = (key: keyof typeof downloads[0]) => {
+    setSortConfig((prevConfig) => {
+      if (prevConfig.key === key) {
+        return { key, direction: prevConfig.direction === "asc" ? "desc" : "asc" };
+      }
+      return { key, direction: "asc" };
+    });
+  };
+
+  const getChevron = (key: keyof typeof downloads[0]) => {
+    if (sortConfig.key === key) {
+      return sortConfig.direction === "asc" ? "▲" : "▼";
+    }
+    return "";
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,108 +59,117 @@ export default function Home() {
         <Navigation />
       </div>
       <div className="mt-16"> {/* Adjust this value based on the height of your Navigation component */}
-        <div className="relative w-full h-screen overflow-hidden">
+        <div className="relative w-full h-screen overflow-hidden bg-gray-900 text-white">
           {images.map((image, index) => (
             <div
               key={index}
               className={`absolute w-full h-full bg-cover bg-center transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
               style={{ backgroundImage: `url(${image.src})` }}
             >
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-50 p-5 rounded-lg text-center">
-                <Typography variant="h4" component="h2" className="text-white">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 p-8 rounded-lg text-center max-w-lg">
+                <Typography variant="h3" component="h1" className="font-bold mb-4">
                   {image.title}
                 </Typography>
-                <Typography variant="h6" component="p" className="text-white">
+                <Typography variant="body1" className="mb-6">
                   {image.subtitle}
                 </Typography>
                 <Button
                   variant="contained"
                   color="primary"
                   size="large"
-                  className="mt-4"
+                  className="w-full"
                   href={image.link}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {image.buttonText}
+                  {image.buttonText || "Download Now"}
                 </Button>
               </div>
             </div>
           ))}
-          <div className="absolute top-0 right-0 h-full w-1 bg-black bg-opacity-50">
-            <div className="h-full w-full bg-red-500 transition-height duration-150" style={{ height: `${progress}%` }} />
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {images.map((_, idx) => (
+              <div
+                key={idx}
+                className={`w-3 h-3 rounded-full ${idx === currentSlide ? 'bg-red-500' : 'bg-gray-500'}`}
+              />
+            ))}
           </div>
         </div>
 
         <Container maxWidth="lg" className="mt-8">
-          {/* Free Mods Section */}
+          {/* Downloads Section */}
           <Box className="mt-16 text-center">
             <Typography variant="h4" component="h2" gutterBottom className="font-bold">
-              Free Mods
+              Downloads
             </Typography>
-            <Grid container spacing={4}>
-              {freeMods.map((mod, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Paper className="p-8 rounded-lg shadow-lg">
-                    <Image src={mod.image} alt={mod.title} className="w-full rounded-lg" width={500} height={300} />
-                    <Typography variant="h6" component="h3" className="mt-4 font-bold">
-                      {mod.title}
-                    </Typography>
-                    {Array.isArray(mod.description) ? (
-                      mod.description.map((line, idx) => (
-                        <Typography key={idx} variant="body1" className={`mt-${idx === 0 ? '2' : '0'}`}>
-                          {line}
-                        </Typography>
-                      ))
-                    ) : (
-                      <Typography variant="body1" className="mt-2">
-                        {mod.description}
-                      </Typography>
-                    )}
-                    <Box className="flex justify-center mt-2">
-                      <GameIcon className="mr-2" />
-                      <Typography variant="body2">
-                        {mod.game}
-                      </Typography>
-                    </Box>
-                    <Box className="flex justify-center items-center mt-2">
-                      <AuthorIcon className="mr-2" />
-                      <Typography variant="body2">
-                        {mod.author}
-                      </Typography>
-                      {mod.author === "KimDog" && <CheckCircleIcon className="text-green-500 ml-2" />}
-                    </Box>
-                    <Box className="flex justify-around mt-4">
-                      {mod.steamLink !== "#" && (
+            <Box className="mt-8 overflow-x-auto">
+              <table className="table-auto w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr className="bg-gray-800 text-white">
+                    <th
+                      className="border border-gray-300 px-4 py-2 cursor-pointer"
+                      onClick={() => handleSort("name")}
+                    >
+                      Name {getChevron("name")}
+                    </th>
+                    <th
+                      className="border border-gray-300 px-4 py-2 cursor-pointer"
+                      onClick={() => handleSort("game")}
+                    >
+                      Game {getChevron("game")}
+                    </th>
+                    <th
+                      className="border border-gray-300 px-4 py-2 cursor-pointer"
+                      onClick={() => handleSort("version")}
+                    >
+                      Version {getChevron("version")}
+                    </th>
+                    <th
+                      className="border border-gray-300 px-4 py-2 cursor-pointer"
+                      onClick={() => handleSort("size")}
+                    >
+                      Size {getChevron("size")}
+                    </th>
+                    <th
+                      className="border border-gray-300 px-4 py-2 cursor-pointer"
+                      onClick={() => handleSort("updated")}
+                    >
+                      Updated {getChevron("updated")}
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2">Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortedDownloads.map((download, index) => (
+                    <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-800 ' : 'bg-gray-800 '}`}>
+                      <td className="border border-gray-300 px-4 py-2">{download.name}</td>
+                      <td className="border border-gray-300 px-4 py-2">{download.game}</td>
+                      <td className="border border-gray-300 px-4 py-2">{download.version || "N/A"}</td>
+                      <td className="border border-gray-300 px-4 py-2">{download.size || "Unknown"}</td>
+                      <td className="border border-gray-300 px-4 py-2">{download.updated || "N/A"}</td>
+                      <td className="border border-gray-300 px-4 py-2">
                         <Button
                           variant="contained"
                           color="primary"
-                          href={mod.steamLink}
+                          href={download.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          startIcon={<Image src="https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/Steam.png" alt="Steam" className="w-5" width={20} height={20} />}
+                          size="small"
                         >
-                          Steam Workshop
+                          Download
                         </Button>
-                      )}
-                      {mod.modsfireLink !== "#" && (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          href={mod.modsfireLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          startIcon={<Image src="https://raw.githubusercontent.com/KimDog-Studios/kimdog-modding/main/public/assets/ModsFire.png" alt="Modsfire" className="w-5" width={20} height={20} />}
-                        >
-                          Modsfire
-                        </Button>
-                      )}
-                    </Box>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Box>
           </Box>
+        </Container>
+
+        <Container maxWidth="lg" className="mt-16">
+          {/* About Section */}
 
           {/* Footer */}
           <footer className="mt-16 p-8 text-center bg-gray-800 text-white rounded-lg">
