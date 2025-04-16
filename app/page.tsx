@@ -1,13 +1,12 @@
 "use client";
 import Navigation from "@/components/Navigation";
-import { Container, Typography, Grid, Paper, Button, Box } from "@mui/material";
+import { Container, Typography, Button, Box } from "@mui/material"; // Removed Grid and Paper
 import { useState, useEffect } from "react";
 import downloads from "@/config/Downloads";
 import images from "@/config/HomeImages";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [sortConfig, setSortConfig] = useState<{ key: keyof typeof downloads[0] | null; direction: "asc" | "desc" }>({ key: null, direction: "asc" });
 
   const sortedDownloads = [...downloads].sort((a, b) => {
@@ -40,16 +39,10 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
-      setProgress(0);
     }, 15000); // Change slide every 15 seconds
-
-    const progressInterval = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 100 / 150));
-    }, 100); // Update progress every 100ms
 
     return () => {
       clearInterval(interval);
-      clearInterval(progressInterval);
     };
   }, []);
 
@@ -58,12 +51,12 @@ export default function Home() {
       <div className="fixed top-0 w-full z-50">
         <Navigation />
       </div>
-      <div className="mt-16"> {/* Adjust this value based on the height of your Navigation component */}
+      <div className="mt-16">
         <div className="relative w-full h-screen overflow-hidden bg-gray-900 text-white">
           {images.map((image, index) => (
             <div
               key={index}
-              className={`absolute w-full h-full bg-cover bg-center transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute w-full h-full bg-cover bg-center transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
               style={{ backgroundImage: `url(${image.src})` }}
             >
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 p-8 rounded-lg text-center max-w-lg">
@@ -91,7 +84,7 @@ export default function Home() {
             {images.map((_, idx) => (
               <div
                 key={idx}
-                className={`w-3 h-3 rounded-full ${idx === currentSlide ? 'bg-red-500' : 'bg-gray-500'}`}
+                className={`w-3 h-3 rounded-full ${idx === currentSlide ? "bg-red-500" : "bg-gray-500"}`}
               />
             ))}
           </div>
@@ -142,7 +135,7 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {sortedDownloads.map((download, index) => (
-                    <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-800 ' : 'bg-gray-800 '}`}>
+                    <tr key={index} className={`${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}`}>
                       <td className="border border-gray-300 px-4 py-2">{download.name}</td>
                       <td className="border border-gray-300 px-4 py-2">{download.game}</td>
                       <td className="border border-gray-300 px-4 py-2">{download.version || "N/A"}</td>
